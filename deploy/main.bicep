@@ -337,3 +337,4 @@ resource frontDoor 'Microsoft.Network/frontDoors@2020-01-01' = {
 output principalId string = webSiteName
 output sqlserverName string = sqlserverName
 output databaseName string = databaseName
+output sqlServerFullyQualifiedDomainName string = sqlserver.properties.fullyQualifiedDomainName
