@@ -28,7 +28,7 @@ You will need the latest version of the [Azure CLI](https://docs.microsoft.com/e
 1. Define environment variables.
 
 ```bash
-RESOURCE_GROUP='AppServiceNetworkingDemo'
+RESOURCE_GROUP='appsvcnetworkingdemo'
 LOCATION=westus
 ```
 
