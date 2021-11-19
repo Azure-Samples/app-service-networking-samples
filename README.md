@@ -56,7 +56,7 @@ RESOURCE_GROUP_ID=<resource group ID from previous output>
 
 ```azure cli
 az ad sp create-for-rbac \
-  --name AppServiceNetworkingDemo \
+  --name appsvcnetworkingdemo \
   --role Contributor \
   --scopes $RESOURCE_GROUP_ID \
   --sdk-auth
@@ -70,6 +70,17 @@ az ad sp create-for-rbac \
 
 1. Select *Add Secret*.
 
+1. In the same manner add 2 additional secrets: _SQL_USERNAME_ and _SQL_PASSWORD_ and give them a value of your choice. Make sure you make the SQL password complex enough. 
+
+1. Inspect the [infradeploy.yml](.github/workflows/infradeploy.yml) file and update any environment variables at the top of the file to reflect your environment. 
+
+1. In your GitHub repo, navigate to *Actions* and select the *deploy-app-svc-networking-sample* action. 
+
+1. Select *Run workflow* > *Run workflow*. 
+
+1. This will start a new workflow run and deploy the necessary infrastructure. 
+
+1. Double check in the Azure Portal that all resources got deployed correctly and are up and running. 
 
 ### Quickstart
 (Add steps to get up and running quickly)
