@@ -7,8 +7,6 @@ param name string = 'appsvcnetworkingdemo'
 param aadUsername string
 @secure()
 param aadSid string
-@secure()
-param tenantId string
 
 // Variables
 var hostingPlanName = '${name}${uniqueString(resourceGroup().id)}'
@@ -81,7 +79,7 @@ resource sqlserver 'Microsoft.Sql/servers@2021-02-01-preview' = {
       login: aadUsername
       principalType: 'User'
       sid: aadSid
-      tenantId: tenantId
+      tenantId: tenant().tenantId
     }
     publicNetworkAccess: 'Enabled'
     version: '12.0'
