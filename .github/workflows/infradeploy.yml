@@ -29,7 +29,7 @@ jobs:
          resourceGroupName: ${{ env.AZURE_RESOURCEGROUP_NAME }}
          template: ./deploy/main.bicep
          parameters: name=${{ env.AZURE_RESOURCEGROUP_NAME }} aadUsername=${{ secrets.AAD_USERNAME }} aadSid=${{ secrets.AAD_SID }} 
-    #  - name: Azure SQL Allow MI
+    #  - name: Azure SQL Allow MI 
     #    uses: Azure/sql-action@v1
     #    with:
     #      # Name of the Azure SQL Server name, like Fabrikam.database.windows.net.
