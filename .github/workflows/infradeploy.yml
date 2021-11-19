@@ -1,1 +1,42 @@
 name: deploy-app-svc-networking-sample
+
+on: [workflow_dispatch]
+
+env: 
+    AZURE_RESOURCEGROUP_NAME: AppServiceNetworkingDemo
+
+jobs:
+  deploy-infra:
+    runs-on: ubuntu-latest
+    steps:
+     - uses: actions/checkout@v2
+     - uses: azure/login@v1
+       name: Sign in to Azure
+       with:
+         creds: ${{ secrets.AZURE_CREDENTIALS }}    
+     - uses: Azure/cli@v1
+       name: Fetch AAD Info
+       id: fetchInfo
+       with:
+        inlineScript: |
+           aadSid=$(az ad user show --id ${{ secrets.AAD_USERNAME }} --query objectId -o tsv)
+           echo "::set-output name=aadSid::$aadSid"
+     - uses: azure/arm-deploy@v1
+       id: deploy
+       name: Deploy Bicep
+       with:
+         deploymentName: ${{ github.run_number }}
+         resourceGroupName: ${{ env.AZURE_RESOURCEGROUP_NAME }}
+         template: ./deploy/main.bicep
+         parameters: name=${{ env.AZURE_RESOURCEGROUP_NAME }} aadUsername=${{ secrets.AAD_USERNAME }} aadSid=${{ steps.fetchInfo.aadSid }} 
+     - name: Azure SQL Allow MI
+       uses: Azure/sql-action@v1
+       with:
+         # Name of the Azure SQL Server name, like Fabrikam.database.windows.net.
+         server-name: ${{ steps.deploy.outputs.sqlserverName }}.database.windows.net
+         # The connection string, including authentication information, for the Azure SQL Server database.
+         connection-string: server=tcp:${{ steps.deploy.outputs.sqlserverName }}.database.windows.net;database=${{ steps.deploy.outputs.databaseName }}
+         # Path to SQL script file to deploy
+         sql-file: ./deploy/mi.sql
+         # In case DACPAC option is selected, additional SqlPackage.exe arguments that will be applied. When SQL query option is selected, additional sqlcmd.exe arguments will be applied.
+         # arguments: # optional
