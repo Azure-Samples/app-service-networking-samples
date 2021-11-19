@@ -3,12 +3,10 @@ param location string = resourceGroup().location
 
 param name string = 'appsvcnetworkingdemo'
 
-@description('The administrator login username for the SQL server.')
-param sqlServerAdministratorLogin string
-
 @secure()
-@description('The administrator login password for the SQL server.')
-param sqlServerAdministratorLoginPassword string
+param aadUsername string
+@secure()
+param aadSid string
 
 // Variables
 var hostingPlanName = '${name}${uniqueString(resourceGroup().id)}'
@@ -27,8 +25,6 @@ var loadBalancingSettingsName = 'loadBalancingSettings'
 var healthProbeSettingsName = 'healthProbeSettings'
 var routingRuleName = 'routingRule'
 var backendPoolName = 'backendPool'
-
-// var sqlDatabaseConnectionString = 'Server=tcp:${sqlserver.properties.fullyQualifiedDomainName},1433;Initial Catalog=${sqlDatabase.name};Persist Security Info=False;User ID=${sqlServerAdministratorLogin};Password=${sqlServerAdministratorLoginPassword};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;'
 
 // Web App resources
 resource hostingPlan 'Microsoft.Web/serverfarms@2020-12-01' = {
@@ -77,8 +73,16 @@ resource sqlserver 'Microsoft.Sql/servers@2021-02-01-preview' = {
   name: sqlserverName
   location: location
   properties: {
-    administratorLogin: sqlServerAdministratorLogin
-    administratorLoginPassword: sqlServerAdministratorLoginPassword
+    administrators: {
+      administratorType: 'ActiveDirectory'
+      azureADOnlyAuthentication: true
+      login: aadUsername
+      principalType: 'User'
+      sid: aadSid
+      tenantId: tenant().tenantId
+    }
+    publicNetworkAccess: 'Enabled'
+    version: '12.0'
   }
 }
 

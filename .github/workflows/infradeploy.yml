@@ -14,13 +14,13 @@ jobs:
        name: Sign in to Azure
        with:
          creds: ${{ secrets.AZURE_CREDENTIALS }}    
-    #  - uses: Azure/cli@v1
-    #    name: Fetch AAD Info
-    #    id: fetchInfo
-    #    with:
-    #     inlineScript: |
-    #        aadSid=$(az ad user show --id ${{ secrets.AAD_USERNAME }} --query objectId -o tsv)
-    #        echo "::set-output name=aadSid::$aadSid"
+     - uses: Azure/cli@v1
+       name: Fetch AAD Info
+       id: fetchInfo
+       with:
+        inlineScript: |
+           aadSid=$(az ad user show --id ${{ secrets.AAD_USERNAME }} --query objectId -o tsv)
+           echo "::set-output name=aadSid::$aadSid"
      - uses: azure/arm-deploy@v1
        id: deploy
        name: Deploy Bicep
@@ -28,15 +28,15 @@ jobs:
          deploymentName: ${{ github.run_number }}
          resourceGroupName: ${{ env.AZURE_RESOURCEGROUP_NAME }}
          template: ./deploy/main.bicep
-         parameters: name=${{ env.AZURE_RESOURCEGROUP_NAME }} sqlServerAdministratorLogin=${{ secrets.SQL_USERNAME }} sqlServerAdministratorLoginPassword=${{ secrets.SQL_PASSWORD }} 
-     - name: Azure SQL Allow MI
-       uses: Azure/sql-action@v1
-       with:
-         # Name of the Azure SQL Server name, like Fabrikam.database.windows.net.
-         server-name: ${{ steps.deploy.outputs.sqlServerFullyQualifiedDomainName }}
-         # The connection string, including authentication information, for the Azure SQL Server database.
-         connection-string: ${{ format('Server={0};Initial Catalog={1};User Id={2};Password={3};', steps.deploy.outputs.sqlServerFullyQualifiedDomainName, steps.deploy.outputs.databaseName, secrets.SQL_USERNAME, secrets.SQL_PASSWORD) }}
-         # Path to SQL script file to deploy
-         sql-file: ./deploy/mi.sql
-         # In case DACPAC option is selected, additional SqlPackage.exe arguments that will be applied. When SQL query option is selected, additional sqlcmd.exe arguments will be applied.
-         arguments: -v accountName=${{ steps.deploy.outputs.principalId }} # optional
+         parameters: name=${{ env.AZURE_RESOURCEGROUP_NAME }} aadUsername=${{ secrets.AAD_USERNAME }} aadSid=${{ steps.fetchInfo.aadSid }} 
+    #  - name: Azure SQL Allow MI
+    #    uses: Azure/sql-action@v1
+    #    with:
+    #      # Name of the Azure SQL Server name, like Fabrikam.database.windows.net.
+    #      server-name: ${{ steps.deploy.outputs.sqlServerFullyQualifiedDomainName }}
+    #      # The connection string, including authentication information, for the Azure SQL Server database.
+    #      connection-string: ${{ format('Server={0};Initial Catalog={1};User Id={2};Password={3};', steps.deploy.outputs.sqlServerFullyQualifiedDomainName, steps.deploy.outputs.databaseName, secrets.SQL_USERNAME, secrets.SQL_PASSWORD) }}
+    #      # Path to SQL script file to deploy
+    #      sql-file: ./deploy/mi.sql
+    #      # In case DACPAC option is selected, additional SqlPackage.exe arguments that will be applied. When SQL query option is selected, additional sqlcmd.exe arguments will be applied.
+    #      arguments: -v accountName=${{ steps.deploy.outputs.principalId }} # optional
