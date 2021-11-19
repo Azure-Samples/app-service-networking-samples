@@ -61,7 +61,7 @@ resource webSite 'Microsoft.Web/sites@2020-12-01' = {
         }
         {
           name: 'DefaultSqlConnectionSqlConnectionStringSuffix'
-          value: 'server=tcp:${sqlserverName}.database.windows.net;database=${databaseName}'
+          value: 'server=tcp:${sqlserver.properties.fullyQualifiedDomainName};database=${databaseName}'
         }
       ]
       linuxFxVersion: 'DOCKER|jelledruyts/inspectorgadget'
