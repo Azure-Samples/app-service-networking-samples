@@ -20,7 +20,8 @@ For outgoing calls, from your app service instance to any other services, the in
 - Select the _Properties_ menu for your app service.
 - Notice the Virtual IP address for your app service
 - Notice the Outbound IP addresses and additional outbound IP addresses for your app service. These are the shared IP addresses that app service will NAT your worker node IP address to for outgoing calls. The address you saw in your app when you submitted a query to your database should be in these lists. 
+- Select the _Networking_ menu for your app service. Notice that the networking features for app service in this screen are split between features for inbound traffic and for outbound traffic. 
 
-In the next walkthroughs, you will learn how to further lock down the incoming and the outgoing communication paths of your app service. 
+In the next walkthroughs, you will learn how to further lock down the inbound and the outbound communication paths of your app service. We will start with how to lock down inbound requests. 
 
 Next guide: [Access/IP Restrictions](02_IPrestrictions.md)
