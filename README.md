@@ -30,7 +30,7 @@ The below drawing illustrates this setup:
 The below walk-through contains the steps for creating a resource group in Azure and the steps needed to set up your deployment secret in your GitHub repository. 
 You will need the latest version of the [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli) installed to execute these steps.
 
-1. In a command prompt, define environment variables.
+1. In a command prompt or in Azure Cloud Shell, define environment variables.
 
 ```bash
 RESOURCE_GROUP='appsvcnetworkingdemo'
@@ -118,9 +118,27 @@ To check whether the installation was done correctly:
 1. Select _Submit_. This should give you a response on the same page with an access token and an output indicating you successfully logged in to the database by using a managed identity and from a public IP address. 
 
 
-## Demo
+## Demos
 
-TODO
+These demo's work best if you follow them one by one. They walk you through a full setup going from using out of the box networking to the option you have for extra locking down app service for incoming requests and next for outgoing requests. 
+
+1. [Out of the Box Networking](demos/01_outofthebox.md)
+
+### Locking down incoming traffic
+
+1. [Access/IP Restrictions](demos/02_IPrestrictions.md)
+1. [Service Endpoints](demos/03_serviceendpoints.md)
+1. [Private Link](demos/04_privatelink.md)
+
+### Locking down outgoing traffic
+
+1. [Hybrid Connections](demos/05_Hybirdconnections.md)
+1. [Gateway required VNet integration](demos/06_GWrequiredVNetintegration.md)
+1. [(Regional) VNet integration](demos/07_RegionalVNetintegration.md)
+
+### Special case
+
+1. [ASEv3](demos/08_ASEv3.md)
 
 ## Resources
 
