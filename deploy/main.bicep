@@ -59,6 +59,10 @@ resource webSite 'Microsoft.Web/sites@2020-12-01' = {
           name: 'DefaultSqlConnectionSqlConnectionStringSuffix'
           value: 'server=tcp:${sqlserver.properties.fullyQualifiedDomainName};database=${databaseName}'
         }
+        {
+          name: 'DefaultSqlConnectionUseAzureManagedIdentity'
+          value: 'true'
+        }
       ]
       linuxFxVersion: 'DOCKER|jelledruyts/inspectorgadget'
     }

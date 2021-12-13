@@ -113,8 +113,6 @@ To check whether the installation was done correctly:
 
 1. Select the URL of the App Service to navigate to the web application.
 
-1. In the web application select the SQL menu and check the _Use Azure Managed Identity to connect to the database_ box. 
-
 1. Select _Submit_. This should give you a response on the same page with an access token and an output indicating you successfully logged in to the database by using a managed identity and from a public IP address. 
 
 

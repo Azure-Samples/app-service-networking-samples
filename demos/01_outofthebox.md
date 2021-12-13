@@ -13,9 +13,8 @@ For outgoing calls, from your app service instance to any other services, the in
 - Select the URL of your app service, this opens an additional tab for your app service. 
 - You are now seeing the [Inspector Gadget](https://github.com/jelledruyts/inspectorgadget) application that got deployed to your app service. This application is very useful for inspecting the internal behavior of your app service. On its start page it already gives you useful data on the incoming request, any HTTP headers that got send to your app, environment variables being used, ...
 - Select the SQL menu at the top of the app. We will use this page to make a call to the backend SQL server database. 
-- Select the 'Use Azure Managed Identity to connect to the database' checkbox
 - Select _Submit_
-- In the Response output, notice that the app service connected to the backend databases over a public IP address.  
+- In the Response output, notice that the app service connected to the backend database over a public IP address.  
 - Navigate back to the Azure Portal.
 - Select the _Properties_ menu for your app service.
 - Notice the Virtual IP address for your app service
