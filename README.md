@@ -148,6 +148,7 @@ These demo's work best if you follow them one by one. They walk you through a fu
 ### App Service Docs
 
 - [App Service networking features](https://docs.microsoft.com/azure/app-service/networking-features)
+- [Inbound and outbound IP addresses in Azure App Service](https://docs.microsoft.com/azure/app-service/overview-inbound-outbound-ips)
 - [Regional VNet integration](https://docs.microsoft.com/azure/app-service/web-sites-integrate-with-vnet#regional-vnet-integration)
 - [App Service private endpoints](https://docs.microsoft.com/azure/app-service/networking/private-endpoint)
 - [Hybrid connections](https://docs.microsoft.com/azure/app-service/app-service-hybrid-connections)

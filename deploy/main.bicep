@@ -204,6 +204,14 @@ resource applicationGateway 'Microsoft.Network/applicationGateways@2020-11-01' =
     backendAddressPools: [
       {
         name: 'myBackendPool'
+        properties:{
+          backendAddresses: [
+            {
+              fqdn: webSite.properties.defaultHostName
+            }
+
+          ]
+        }
       }
     ]
     backendHttpSettingsCollection: [
@@ -213,6 +221,8 @@ resource applicationGateway 'Microsoft.Network/applicationGateways@2020-11-01' =
           port: 80
           protocol: 'Http'
           cookieBasedAffinity: 'Disabled'
+          pickHostNameFromBackendAddress: false
+          hostName: webSite.properties.defaultHostName
         }
       }
     ]
