@@ -3,6 +3,8 @@
 With Service Endpoints, you can restrict access to your app service to 1 or more specific subnets in your Azure Virtual Network. This works for all Virtual networks in the same region.
 A typical setup using Service Endpoints is for an app service that is fronted by an Application Gateway. Any inbound traffic then first needs to hit the application gateway, before its allowed to hit the app service.
 
+![Service Endpoints](../media/service%20endpoints.svg)
+
 ## Demo Walkthrough
 
 In this walkthrough you will configure your app service to restrict access to only allow calls coming from your Application Gateway.

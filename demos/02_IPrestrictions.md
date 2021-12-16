@@ -2,6 +2,8 @@
 
 With Access Restrictions you have the ability to deny or allow certain IP addresses or address ranges access to your app service. You also have the ability to deny or allow traffic based on HTTP Headers. In the demo walkthrough you will learn when this might be useful.
 
+![Access Restrictions](../media/access%20restrictions.svg)
+
 ## Demo Walkthrough
 
 You will first block access to your app service for calls coming from a specific IP address.
