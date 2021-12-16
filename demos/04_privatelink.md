@@ -48,8 +48,8 @@ In this walkthrough you will create a private endpoint for your app service.
 > [NOTE]
 > To enable access to your web app through the application gateway, the demo setup uses _host header override_ in the application gateway. You should never use this for production workloads. Instead you should properly configure a custom domain for your app service and use this customer domain to access your appservice. [This link](https://docs.microsoft.com/en-us/azure/application-gateway/troubleshoot-app-service-redirection-app-service-url#alternate-solution-use-a-custom-domain-name) describes how to properly configure a custom domain on app service in combination with application gateway.
 
-- In the Azure Portal, navigate back to the page that holds your private endpoint.
-- Select your private endpoint and select _Remove_.
+> [NOTE]
+> Notice that in this walkthrough we do not remove the private endpoint configuration, removing it puts the demo walkthrough in a _in limbo_ state where it takes a while for the public URL of the app to be back available. Since we don't want to let you wait for this, we will leave the private endpoint in place.
 
 You now have a good overview of the options you have for locking down the inbound traffic for app service. In the next demo walkthroughs, you will lock down outbound traffic.
 
