@@ -30,7 +30,7 @@ The below drawing illustrates this setup:
 The below walk-through contains the steps for creating a resource group in Azure and the steps needed to set up your deployment secret in your GitHub repository. 
 You will need the latest version of the [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli) installed to execute these steps.
 
-1. In a command prompt, define environment variables.
+1. In a command prompt or in Azure Cloud Shell, define environment variables.
 
 ```bash
 RESOURCE_GROUP='appsvcnetworkingdemo'
@@ -113,14 +113,30 @@ To check whether the installation was done correctly:
 
 1. Select the URL of the App Service to navigate to the web application.
 
-1. In the web application select the SQL menu and check the _Use Azure Managed Identity to connect to the database_ box. 
-
 1. Select _Submit_. This should give you a response on the same page with an access token and an output indicating you successfully logged in to the database by using a managed identity and from a public IP address. 
 
 
-## Demo
+## Demos
 
-TODO
+These demo's work best if you follow them one by one. They walk you through a full setup going from using out of the box networking to the option you have for extra locking down app service for incoming requests and next for outgoing requests. 
+
+1. [Out of the Box Networking](demos/01_outofthebox.md)
+
+### Locking down incoming traffic
+
+1. [Access/IP Restrictions](demos/02_IPrestrictions.md)
+1. [Service Endpoints](demos/03_serviceendpoints.md)
+1. [Private Link](demos/04_privatelink.md)
+
+### Locking down outgoing traffic
+
+1. [Hybrid Connections](demos/05_Hybirdconnections.md)
+1. [Gateway required VNet integration](demos/06_GWrequiredVNetintegration.md)
+1. [(Regional) VNet integration](demos/07_RegionalVNetintegration.md)
+
+### Special case
+
+1. [ASEv3](demos/08_ASEv3.md)
 
 ## Resources
 
@@ -132,6 +148,7 @@ TODO
 ### App Service Docs
 
 - [App Service networking features](https://docs.microsoft.com/azure/app-service/networking-features)
+- [Inbound and outbound IP addresses in Azure App Service](https://docs.microsoft.com/azure/app-service/overview-inbound-outbound-ips)
 - [Regional VNet integration](https://docs.microsoft.com/azure/app-service/web-sites-integrate-with-vnet#regional-vnet-integration)
 - [App Service private endpoints](https://docs.microsoft.com/azure/app-service/networking/private-endpoint)
 - [Hybrid connections](https://docs.microsoft.com/azure/app-service/app-service-hybrid-connections)
@@ -155,3 +172,5 @@ TODO
 - [Private link resources](https://docs.microsoft.com/azure/private-link/private-endpoint-overview#private-link-resource)
 - [Virtual Network service endpoints](https://docs.microsoft.com/azure/virtual-network/virtual-network-service-endpoints-overview)
 - [Azure Private Link frequently asked questions (FAQ)](https://docs.microsoft.com/azure/private-link/private-link-faq#what-is-the-difference-between-a-service-endpoints-and-a-private-endpoints)
+- [Azure Private Endpoint DNS configuration](https://docs.microsoft.com/en-us/azure/private-link/private-endpoint-dns)
+- [Private Endpoint DNS Integration Scenarios](https://github.com/dmauser/PrivateLink/tree/master/DNS-Integration-Scenarios)
