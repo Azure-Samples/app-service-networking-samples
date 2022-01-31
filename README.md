@@ -1,4 +1,4 @@
-# Project Name
+# App Service Networking Samples
 
 This project contains a sample setup for playing with Azure App Service networking features. 
 
