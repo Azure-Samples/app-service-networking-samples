@@ -122,7 +122,7 @@ To check whether the installation was done correctly:
 
 ## Demos
 
-These demo's work best if you follow them one by one. They walk you through a full setup going from using out of the box networking to the option you have for extra locking down app service for incoming requests and next for outgoing requests. 
+These demo's work best if you follow them one by one. They walk you through a full setup going from using out of the box networking to the option you have for extra locking down app service for incoming requests and next for outgoing requests.
 
 1. [Out of the Box Networking](demos/01_outofthebox.md)
 

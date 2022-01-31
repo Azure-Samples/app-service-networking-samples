@@ -1,8 +1,8 @@
 # Out of the Box Networking in Azure App Service
 
-Out of the box app service makes use of a shared incoming IP address for all customers. From this incoming IP address the call is routed to Front End (FE) nodes that act as a load balancer. These FE nodes forward the incoming request to worker nodes specific for each customer, based on the incoming domain name. 
+Out of the box app service makes use of a shared incoming IP address for all customers. From this incoming IP address the call is routed to Front End (FE) nodes that act as a load balancer. These FE nodes forward the incoming request to worker nodes specific for each customer, based on the incoming domain name.
 
-For outgoing calls, from your app service instance to any other services, the internal IP address from your worker nodes gets translated (NATted) to a list of shared outgoing IP addresses. This means that these outgoing IP addresses are not safe to use in case you want to lock down traffic to a backend database for instance to only your app service worker instances. In a later demo, you will learn how to lock down this traffic. 
+For outgoing calls, from your app service instance to any other services, the internal IP address from your worker nodes gets translated (NATted) to a list of shared outgoing IP addresses. This means that these outgoing IP addresses are not safe to use in case you want to lock down traffic to a backend database for instance to only your app service worker instances. In a later demo, you will learn how to lock down this traffic.
 
 ![out of the box networking in app service](../media/default%20behavior.svg)
 
