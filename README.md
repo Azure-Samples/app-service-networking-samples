@@ -75,7 +75,7 @@ az ad sp create-for-rbac \
 
 1. Select *Add Secret*.
 
-1. In your command prompt, query the object id for your user account: 
+1. In your command prompt, query the object id for your user account:
 
 ```azure cli
 az ad user show --id <accountname@domain.extension> --query objectId -o tsv
@@ -85,17 +85,20 @@ az ad user show --id <accountname@domain.extension> --query objectId -o tsv
 
 1. In your GitHub repo add an additional secret: _AAD_SID_ and give it the value of the object id you just obtained.  
 
-1. Inspect the [infradeploy.yml](.github/workflows/infradeploy.yml) file and update any environment variables at the top of the file to reflect your environment. 
+1. Inspect the [infradeploy.yml](.github/workflows/infradeploy.yml) file and update any environment variables at the top of the file to reflect your environment.
 
-1. In your GitHub repo, navigate to *Actions* and select the *deploy-app-svc-networking-sample* action. 
+1. In your GitHub repo, navigate to *Actions* and select the *deploy-app-svc-networking-sample* action.
 
-1. Select *Run workflow* > *Run workflow*. 
+> [!NOTE]
+> In case you see a message that says _Workflows aren’t being run on this forked repository_, select the _I understand my workflows, go ahead and enable them_ button.
 
-1. This will start a new workflow run and deploy the necessary infrastructure. 
+1. Select *Run workflow* > *Run workflow*.
 
-1. Double check in the Azure Portal that all resources got deployed correctly and are up and running. 
+1. This will start a new workflow run and deploy the necessary infrastructure.
 
-1. In the Azure Portal in your resource group, navigate to the _Deployments_ menu. Select the last deployment and next select _outputs_. 
+1. Double check in the Azure Portal that all resources got deployed correctly and are up and running.
+
+1. In the Azure Portal in your resource group, navigate to the _Deployments_ menu. Select the last deployment and next select _outputs_.
 
 1. Copy the value of the _principalId_ value.
 
@@ -103,18 +106,19 @@ az ad user show --id <accountname@domain.extension> --query objectId -o tsv
 
 1. Select _Login as your username_.
 
-1. Copy the sql script from [mi.sql](deploy/mi.sql) in the query editor window and replace each instance of the _accountName_ by the principalId value you just copied. 
+1. Copy the sql script from [mi.sql](deploy/mi.sql) in the query editor window and replace each instance of the _accountName_ by the principalId value you just copied.
 
-1. Execute the script. 
+1. Execute the script.
 
-To check whether the installation was done correctly: 
+To check whether the installation was done correctly:
 
-1. In the Azure portal, navigate to the App Service that got deployed. 
+1. In the Azure portal, navigate to the App Service that got deployed.
 
-1. Select the URL of the App Service to navigate to the web application.
+1. Select the URL of the App Service to navigate to the web application. The application will display info on your incoming request, configuration of the app, environment variables, ...
 
-1. Select _Submit_. This should give you a response on the same page with an access token and an output indicating you successfully logged in to the database by using a managed identity and from a public IP address. 
+1. Select the _SQL_ menu tab at the top of the application. This will display a page for connecting to a backend database.
 
+1. Select _Submit_. This should give you a response on the same page with an access token and an output indicating you successfully logged in to the database by using a managed identity and from a public IP address.
 
 ## Demos
 
