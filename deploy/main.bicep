@@ -111,15 +111,6 @@ resource sqlserverName_AllowAllWindowsAzureIps 'Microsoft.Sql/servers/firewallRu
   }
 }
 
-//Allow all azure services
-resource sqlserverName_AllowMe 'Microsoft.Sql/servers/firewallRules@2014-04-01' = {
-  name: '${sqlserver.name}/AllowMe'
-  properties: {
-    startIpAddress: '167.220.0.0'
-    endIpAddress: '167.220.255.255'
-  }
-}
-
 //networking resources
 resource virtualNetwork 'Microsoft.Network/virtualNetworks@2019-11-01' = {
   name: name
