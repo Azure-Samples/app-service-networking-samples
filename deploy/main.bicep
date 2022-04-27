@@ -18,13 +18,11 @@ var databaseName = 'sampledb'
 var appGatewaySubnetName = 'AppGwSubnet'
 
 var frontDoorName = name
-var backendAddress = '${webSiteName}.azurewebsites.net'
 
-var frontEndEndpointName = 'frontEndEndpoint'
-var loadBalancingSettingsName = 'loadBalancingSettings'
-var healthProbeSettingsName = 'healthProbeSettings'
+var frontEndEndpointName = frontDoorName
 var routingRuleName = 'routingRule'
-var backendPoolName = 'backendPool'
+var origingGroupName = 'backendOrigingGroup'
+var origingName = 'appSvcNetDemo'
 
 // Web App resources
 resource hostingPlan 'Microsoft.Web/serverfarms@2020-12-01' = {
@@ -252,94 +250,74 @@ resource applicationGateway 'Microsoft.Network/applicationGateways@2020-11-01' =
   }
 }
 
-resource frontDoor 'Microsoft.Network/frontDoors@2020-01-01' = {
+resource profile 'Microsoft.Cdn/profiles@2021-06-01' = {
   name: frontDoorName
+  location: 'global'
+  sku: {
+    name: 'Premium_AzureFrontDoor'
+  }
+}
+
+resource endpoint 'Microsoft.Cdn/profiles/afdEndpoints@2021-06-01' = {
+  name: frontEndEndpointName
+  parent: profile
   location: 'global'
   properties: {
     enabledState: 'Enabled'
+  }
+}
 
-    frontendEndpoints: [
-      {
-        name: frontEndEndpointName
-        properties: {
-          hostName: '${frontDoorName}.azurefd.net'
-          sessionAffinityEnabledState: 'Disabled'
-        }
-      }
-    ]
+resource originGroup 'Microsoft.Cdn/profiles/originGroups@2021-06-01' = {
+  name: origingGroupName
+  parent: profile
+  properties: {
+    loadBalancingSettings: {
+      sampleSize: 4
+      successfulSamplesRequired: 3
+    }
+    healthProbeSettings: {
+      probePath: '/'
+      probeRequestType: 'HEAD'
+      probeProtocol: 'Http'
+      probeIntervalInSeconds: 30
+    }
+  }
+}
 
-    loadBalancingSettings: [
-      {
-        name: loadBalancingSettingsName
-        properties: {
-          sampleSize: 4
-          successfulSamplesRequired: 2
-        }
-      }
-    ]
+resource origin 'Microsoft.Cdn/profiles/originGroups/origins@2021-06-01' = {
+  name: origingName
+  parent: originGroup
+  properties: {
+    hostName: webSite.properties.defaultHostName
+    httpPort: 80
+    httpsPort: 443
+    originHostHeader: webSite.properties.defaultHostName
+    priority: 1
+    weight: 50
+  }
+}
 
-    healthProbeSettings: [
-      {
-        name: healthProbeSettingsName
-        properties: {
-          path: '/'
-          protocol: 'Http'
-          intervalInSeconds: 120
-        }
-      }
-    ]
 
-    backendPools: [
-      {
-        name: backendPoolName
-        properties: {
-          backends: [
-            {
-              address: backendAddress
-              backendHostHeader: backendAddress
-              httpPort: 80
-              httpsPort: 443
-              weight: 50
-              priority: 1
-              enabledState: 'Enabled'
-            }
-          ]
-          loadBalancingSettings: {
-            id: resourceId('Microsoft.Network/frontDoors/loadBalancingSettings', frontDoorName, loadBalancingSettingsName)
-          }
-          healthProbeSettings: {
-            id: resourceId('Microsoft.Network/frontDoors/healthProbeSettings', frontDoorName, healthProbeSettingsName)
-          }
-        }
-      }
+resource route 'Microsoft.Cdn/profiles/afdEndpoints/routes@2021-06-01' = {
+  name: routingRuleName
+  parent: endpoint
+  dependsOn:[
+    origin // This explicit dependency is required to ensure that the origin group is not empty when the route is created.
+  ]
+  properties: {
+    originGroup: {
+      id: originGroup.id
+    }
+    supportedProtocols: [
+      'Http'
+      'Https'
     ]
-    routingRules: [
-      {
-        name: routingRuleName
-        properties: {
-          frontendEndpoints: [
-            {
-              id: resourceId('Microsoft.Network/frontDoors/frontEndEndpoints', frontDoorName, frontEndEndpointName)
-            }
-          ]
-          acceptedProtocols: [
-            'Http'
-            'Https'
-          ]
-          patternsToMatch: [
-            '/*'
-          ]
-          routeConfiguration: {
-            '@odata.type': '#Microsoft.Azure.FrontDoor.Models.FrontdoorForwardingConfiguration'
-            forwardingProtocol: 'MatchRequest'
-            backendPool: {
-              id: resourceId('Microsoft.Network/frontDoors/backEndPools', frontDoorName, backendPoolName)
-            }
-          }
-          enabledState: 'Enabled'
-        }
-      }
+    patternsToMatch: [
+      '/*'
     ]
+    forwardingProtocol: 'MatchRequest'
+    linkToDefaultDomain: 'Enabled'
+    httpsRedirect: 'Enabled'
   }
 }
 
@@ -347,3 +325,5 @@ output principalId string = webSiteName
 output sqlserverName string = sqlserverName
 output databaseName string = databaseName
 output sqlServerFullyQualifiedDomainName string = sqlserver.properties.fullyQualifiedDomainName
+output webSiteHostName string = webSite.properties.defaultHostName
+output frontDoorEndpointHostName string = endpoint.properties.hostName

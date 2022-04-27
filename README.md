@@ -126,6 +126,8 @@ You can use the bash script below to deploy the necessary resources directly fro
 This script also generates a `dbuser.sql` file which you can use to grant the managed identity of the web app access to the database (for example, using sqlcmd or the SQL query editor in the Azure portal).
 
 ```bash
+#!/bin/bash
+
 # Define parameters.
 RESOURCE_GROUP=appsvcnetworkingdemo
 LOCATION=westus
@@ -158,10 +160,10 @@ APPSVC_IDENTITY=$(az deployment group show \
 
 # Create a SQL file to execute on the database which grants access to the App Service managed identity.
 cat <<EOT> dbuser.sql
-CREATE USER $APPSVC_IDENTITY FROM EXTERNAL PROVIDER;
-ALTER ROLE db_datareader ADD MEMBER $APPSVC_IDENTITY;
-ALTER ROLE db_datawriter ADD MEMBER $APPSVC_IDENTITY;
-ALTER ROLE db_ddladmin ADD MEMBER $APPSVC_IDENTITY;
+CREATE USER [$APPSVC_IDENTITY] FROM EXTERNAL PROVIDER;
+ALTER ROLE db_datareader ADD MEMBER [$APPSVC_IDENTITY];
+ALTER ROLE db_datawriter ADD MEMBER [$APPSVC_IDENTITY];
+ALTER ROLE db_ddladmin ADD MEMBER [$APPSVC_IDENTITY];
 GO;
 EOT
 

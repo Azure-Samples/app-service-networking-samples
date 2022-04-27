@@ -40,16 +40,36 @@ In this walkthrough you will create a private endpoint for your app service.
 > [NOTE]
 > Additionaly overall Azure DNS will have added a configuration that points from yourwebapp.azurewebsites.net to yourwebapp.privatelink.azurewebsites.net.
 
+### Application Gateway
 - Navigate back to the resource group, select the Public IP Address resource. This IP address is associated with the application gateway in the resource group.
 - Copy the IP address.
 - Open a new browser tab and paste the IP address.
-- You will be able to access the web app through the IP address of the application gateway.
+- You will be able to access the web app through the IP address of the application gateway (as both resources use the same VNET).
 
 > [NOTE]
 > To enable access to your web app through the application gateway, the demo setup uses _host header override_ in the application gateway. You should never use this for production workloads. Instead you should properly configure a custom domain for your app service and use this customer domain to access your appservice. [This link](https://docs.microsoft.com/en-us/azure/application-gateway/troubleshoot-app-service-redirection-app-service-url#alternate-solution-use-a-custom-domain-name) describes how to properly configure a custom domain on app service in combination with application gateway.
 
+### Azure Front Door
+To enable Azure Front Door to reach the web app through the private link, you need to configure the origin to use private link:
+- In the Azure Portal, Navigate to your front door instance
+- In the overview, locate the Origin Groups and click on the ´backendOrigingGroup´
+- Click on the three dot located in the right side and click on ´Configure origing group´
+- Click on the origin for the app service web app
+- Check the ´Enable Private Link service´
+- Select ´Region´ where the app service is deployed
+- Select *Sites* as the ´Target sub resource´
+- Add a request message (e.g.: "Private link access from Azure Front Door")
+- Apply and update the origin
+- Once saved and updated, navigate to your app service.
+- In the overview screen select the URL of your app service and open the site in a new tab.
+- Select the _Networking_ menu for your app service.
+- Select _Private endpoints_.
+- You will see a new private endpoint that needs to be approved with the request message you provided in the previous step (*Private link access from Azure Front Door*)
+
+Once you have approved the Private Link it will take few minutes to the configuration to be propagated, then you will be able to reach the web app thru front door. 
+
 > [NOTE]
-> Notice that in this walkthrough we do not remove the private endpoint configuration, removing it puts the demo walkthrough in a _in limbo_ state where it takes a while for the public URL of the app to be back available. Since we don't want to let you wait for this, we will leave the private endpoint in place.
+> Notice that in this walkthrough we do not remove the private endpoint configurations, removing it puts the demo walkthrough in a _in limbo_ state where it takes a while for the public URL of the app to be back available. Since we don't want to let you wait for this, we will leave the private endpoint in place.
 
 You now have a good overview of the options you have for locking down the inbound traffic for app service. In the next demo walkthroughs, you will lock down outbound traffic.
 
