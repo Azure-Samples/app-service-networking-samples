@@ -100,7 +100,8 @@ resource sqlDatabase 'Microsoft.Sql/servers/databases@2020-08-01-preview' = {
   }
 }
 
-//Allow all azure services
+//Allow all azure services: do NOT do this in production! This opens up your database to ALL azure customers azure services! 
+//In the demo walkthrough you will lock this down.
 resource sqlserverName_AllowAllWindowsAzureIps 'Microsoft.Sql/servers/firewallRules@2014-04-01' = {
   name: '${sqlserver.name}/AllowAllWindowsAzureIps'
   properties: {
