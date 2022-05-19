@@ -17,7 +17,7 @@ var databaseName = 'sampledb'
 
 var appGatewaySubnetName = 'AppGwSubnet'
 
-var frontDoorName = name
+var frontDoorName = '${name}${uniqueString(resourceGroup().id)}'
 
 var frontEndEndpointName = frontDoorName
 var routingRuleName = 'routingRule'
