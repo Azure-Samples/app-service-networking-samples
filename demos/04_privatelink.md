@@ -52,8 +52,8 @@ In this walkthrough you will create a private endpoint for your app service.
 ### Azure Front Door
 To enable Azure Front Door to reach the web app through the private link, you need to configure the origin to use private link as per stepts below (for details: [check this link](https://docs.microsoft.com/azure/frontdoor/standard-premium/how-to-enable-private-link-web-app)):
 - In the Azure Portal, Navigate to your front door instance
-- In the overview, locate the Origin Groups and click on the ´backendOrigingGroup´
-- Click on the three dot located in the right side and click on ´Configure origing group´
+- In the overview, locate the Origin Groups and click on the ´backendOriginGroup´
+- Click on the three dot located in the right side and click on ´Configure origin group´
 - Click on the origin for the app service web app
 - Check the ´Enable Private Link service´
 - Select ´Region´ where the app service is deployed
