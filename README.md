@@ -131,9 +131,13 @@ This script also generates a `dbuser.sql` file which you can use to grant the ma
 # Define parameters.
 RESOURCE_GROUP=appsvcnetworkingdemo
 LOCATION=westus
+SUBSCRIPTION_ID=<YOUR SUBSCRIPTION ID>
 
 # Log in.
 az login
+
+az account list -o table
+az account set -s SUBSCRIPTION_ID
 
 # Create the deployment resource group.
 az group create --name $RESOURCE_GROUP --location $LOCATION
