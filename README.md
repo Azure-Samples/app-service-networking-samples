@@ -137,17 +137,17 @@ SUBSCRIPTION_ID=<YOUR SUBSCRIPTION ID>
 az login
 
 az account list -o table
-az account set -s SUBSCRIPTION_ID
+az account set -s $SUBSCRIPTION_ID
 
 # Create the deployment resource group.
-az group create --name $RESOURCE_GROUP --location $LOCATION
+az group create --name $RESOURCE_GROUP --location "$LOCATION"
 
 # Download the deployment bicep file (Azure CLI cannot deploy remote bicep files today).
 wget https://raw.githubusercontent.com/Azure-Samples/app-service-networking-samples/main/deploy/main.bicep
 
 # Get current user information for setting up SQL admin.
 AAD_USERNAME=$(az ad signed-in-user show --query userPrincipalName --output tsv)
-AAD_SID=$(az ad signed-in-user show --query objectId --output tsv)
+AAD_SID=$(az ad signed-in-user show --query id --output tsv)
 
 # Deploy the bicep file.
 az deployment group create \
