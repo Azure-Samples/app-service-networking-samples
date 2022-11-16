@@ -49,6 +49,14 @@ In this walkthrough you will create a private endpoint for your app service.
 > [NOTE]
 > To enable access to your web app through the application gateway, the demo setup uses _host header override_ in the application gateway. You should never use this for production workloads. Instead you should properly configure a custom domain for your app service and use this customer domain to access your appservice. [This link](https://docs.microsoft.com/azure/application-gateway/troubleshoot-app-service-redirection-app-service-url#alternate-solution-use-a-custom-domain-name) describes how to properly configure a custom domain on app service in combination with application gateway.
 
+> [NOTE]
+> It might be that you are getting a `Bad Gateway` exception when navigating to your web app through Application Gateway after this configuration. This is because Application Gateway is using cached info on how to access your App Service. You will also see in th Application Gateway Health that it is unhealthy. You can fix this by stopping and restarting the Application Gateway with the below statements.
+
+```bash
+az network application-gateway stop -g <your resource group> -n <your application gateway>
+az network application-gateway start -g <your resource group> -n <your application gateway>
+```
+
 ### Azure Front Door
 To enable Azure Front Door to reach the web app through the private link, you need to configure the origin to use private link as per stepts below (for details: [check this link](https://docs.microsoft.com/azure/frontdoor/standard-premium/how-to-enable-private-link-web-app)):
 - In the Azure Portal, Navigate to your front door instance
