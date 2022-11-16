@@ -78,7 +78,7 @@ The below walkthrough contains the steps for creating a resource group in Azure 
 1. In your command prompt, query the object id for your user account:
 
     ```bash
-    az ad user show --id <accountname@domain.extension> --query objectId -o tsv
+    az ad user show --id <accountname@domain.extension> --query id -o tsv
     ```
 
 1. In your GitHub repo add an additional secret: *AAD_USERNAME* and give it the value of your username accountname@domain.extension.  
