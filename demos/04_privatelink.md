@@ -97,7 +97,11 @@ To enable Azure Front Door to reach the web app through the private link, you ne
 - Select _Private endpoints_.
 - You will see a new private endpoint that needs to be approved with the request message you provided in the previous step (*Private link access from Azure Front Door*)
 
-Once you have approved the Private Link it will take few minutes to the configuration to be propagated, then you will be able to reach the web app through front door. 
+Once you have approved the Private Link it will take few minutes to the configuration to be propagated, then you will be able to reach the web app through front door.
+
+Also, once the new Private Endpoint has been created, if you go now to the _Networking_ menu of your app service, under the _Inbound address_ of the _Inbound Traffic_ options, you shall see two different private IP addresses. The first one ("10.0.2.X") will be the one coming from the private endpoint of the app service that you created earlier ("appSvcPE") and will get a private IP address from inside the PLSubnet of your VNET. The second inbound address that you will see there, if you pay attention to the value of it, you shall see that it does not belong to any private IP address space of any of the subnets of your own VNET. This private endpoint is the one that the Front Door will use, as part of the configuration we did in the last step of our demo. Front Door is a multi-tenant global service, so it resides inside a Microsoft-Managed VNET. This IP address is coming from inside a subnet of this Microsoft-Managed VNET and you cannot access it.
+
+![Private Endpoint](../media/Private_Endpoints_4.png)
 
 > [NOTE]
 > Notice that in this walkthrough we do not remove the private endpoint configurations, removing it puts the demo walkthrough in a _in limbo_ state where it takes a while for the public URL of the app to be back available. Since we don't want to let you wait for this, we will leave the private endpoint in place.
