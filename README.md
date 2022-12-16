@@ -190,7 +190,7 @@ az sql server firewall-rule create \
 
 ## Demos
 
-These demos work best if you follow them one by one. They walk you through a full setup going from using out of the box networking to the option you have for extra locking down app service for incoming requests and next for outgoing requests.
+These demos work best if you follow them one by one. They walk you through a full setup going from using out of the box networking to the options you have for extra locking down app service for incoming requests and next for outgoing requests.
 
 1. [Out of the Box Networking](demos/01_outofthebox.md)
 

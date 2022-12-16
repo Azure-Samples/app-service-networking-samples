@@ -13,7 +13,7 @@ In this demo you will learn where to find the default networking settings of you
 - In the Azure Portal, navigate to your app service.
 - In the _Overview_ screen notice the URL for your app service. This is the domain name app services will use to route incoming calls to the correct worker nodes for this specific app service instance.
 - Select the URL of your app service, this opens your app service in an additional browser tab.
-- You are now seeing the [Inspector Gadget](https://github.com/jelledruyts/inspectorgadget) application that got deployed to your app service. This application is very useful for inspecting the internal behavior of your app service. On its start page it already gives you useful data on the incoming request, any HTTP headers that got send to your app, environment variables being used, ...
+- You are now seeing the [Inspector Gadget](https://github.com/jelledruyts/inspectorgadget) application that got deployed to your app service. This application is very useful for inspecting the internal behavior of your app service. On its start page it already gives you useful data on the incoming request, any HTTP headers that got sent to your app, environment variables being used, etc.
     > There is a [new tool](https://azure.github.io/AppService/2021/04/13/Network-and-Connectivity-Troubleshooting-Tool.html) under *Diagnose and Solve Problems* that will help to diagnose and understand the networking configuration of our web app (currently more powerfull for Windows app services than Linux). 
 - Select the SQL menu at the top of the app. We will use this page to make a call to the backend SQL server database.
 - Select _Submit_
