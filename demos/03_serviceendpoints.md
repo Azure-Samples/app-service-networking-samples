@@ -50,6 +50,8 @@ In this walkthrough you will configure your app service to restrict access to on
 > In the previous case, whenever you created a new access restriction rule, then an implicit _Deny All_ rule was added as a last rule in the rule list and you could only change that [programmatically](https://learn.microsoft.com/en-us/azure/app-service/app-service-ip-restrictions?tabs=azurecli#change-unmatched-rule-action-for-main-site).
 
 ![Access Restrictions](../media/Access_Restriction_Preview_1.png)
+
+
 ![Access Restrictions](../media/Access_Restriction_Preview_2.png)
 
 Previous guide: [Access/IP Restrictions](02_IPrestrictions.md)

@@ -79,6 +79,8 @@ In the next walkthrough you will perform a similar setup, but for Application Ga
 > In the previous case, whenever you created a new access restriction rule, then an implicit _Deny All_ rule was added as a last rule in the rule list and you could only change that [programmatically](https://learn.microsoft.com/en-us/azure/app-service/app-service-ip-restrictions?tabs=azurecli#change-unmatched-rule-action-for-main-site).
 
 ![Access Restrictions](../media/Access_Restriction_Preview_1.png)
+
+
 ![Access Restrictions](../media/Access_Restriction_Preview_2.png)
 
 Previous guide: [Out of the box networking](01_outofthebox.md)
