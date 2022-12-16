@@ -19,12 +19,17 @@ In this walkthrough you will create a private endpoint for your app service.
 
 > [NOTE]
 > When you click _Add_ there are actually 2 options now: _Express_ (the "old" and default one) and _Advanced_ (the "new" one).
+
 ![Private Endpoint](../media/Private_Endpoints_1.png)
+
 > The _Express_ option gives you the original flyout experience.
 > The _Advanced_ option is the new one, where it takes you to a new private link wizard creation experience (like the one you experience when you choose to create other Azure resources, like VMs, Storage Accounts, AKS clusters, etc.).
+
 ![Private Endpoint](../media/Private_Endpoints_2.png)
+
 > The extra capability, compared to the _Express_ option, is given to you inside the 3rd tab of the wizard -_Virtual Network_-, where you can also define a network policy for your private endpoints.
 > By default it is disabled, but clicking on _(edit)_ you can enable network policies (NSGs, UDRs) setting for all private endpoints inside the selected subnet. You can find more details in [this MS Learn article on Managing network policies for private endpoints](https://learn.microsoft.com/en-us/azure/private-link/disable-private-endpoint-network-policy?tabs=network-policy-portal).
+
 ![Private Endpoint](../media/Private_Endpoints_3.png)
 
 - In the flyout fill out the following values:
@@ -40,6 +45,7 @@ In this walkthrough you will create a private endpoint for your app service.
 > Current behavior for multi-tenant app service secured with Private Endpoint was to block external public access. 
 > So, that made App Service different than other services (e.g. Azure SQL DB) in the behavior of removing public access as soon as you enabled private endpoint (without your choice).
 > A recent change made it possible for an App to be accessible through both public and private IP, by enabling private link and setting Microsoft.Web/sites/config/publicNetworkAccess property to enabled. Access restriction can be then set to restrict the public access, if you want to. Now, it is possible to also do it in the portal from the new _Access Restriction (preview)_ screen.
+
 ![Access Restriction](../media/Access_Restriction_Preview_3.png)
 
 > [NOTE]

@@ -72,7 +72,9 @@ In the next walkthrough you will perform a similar setup, but for Application Ga
 
 > [NOTE]
 > There is now a new _Access restriction (preview)_ option for you to select in the _Networking_ menu for your app service.
+
 ![Access Restrictions](../media/Access_Restriction_Preview_1.png)
+
 > This is a new interface where you can essentially once again define lists of allow / deny rules to control traffic to your site. 
 > Rules are evaluated in priority order. 
 > If no created rule is matched to the traffic, the "Unmatched rule action" will control how the traffic is handled. 
