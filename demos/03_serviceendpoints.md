@@ -43,14 +43,7 @@ In this walkthrough you will configure your app service to restrict access to on
 
 > [NOTE]
 > There is now a new _Access restriction (preview)_ option for you to select in the _Networking_ menu for your app service.
-
-![Access Restrictions](../media/Access_Restriction_Preview_1.png)
-
-> This is a new interface where you can essentially once again define lists of allow / deny rules to control traffic to your site. 
-> Rules are evaluated in priority order. 
-> If no created rule is matched to the traffic, the "Unmatched rule action" will control how the traffic is handled. 
-> The difference between this option and the "old" one (other than the obvious UI / UX differences) is that now you get the chance to define the unmatched rule action from the portal itself as allow / deny.
-> In the previous case, whenever you created a new access restriction rule, then an implicit _Deny All_ rule was added as a last rule in the rule list and you could only change that [programmatically](https://learn.microsoft.com/en-us/azure/app-service/app-service-ip-restrictions?tabs=azurecli#change-unmatched-rule-action-for-main-site).
+> Refer back to the last Note of this demo for more details: [Access/IP Restrictions](02_IPrestrictions.md)
 
 ![Access Restrictions](../media/Access_Restriction_Preview_2.png)
 
