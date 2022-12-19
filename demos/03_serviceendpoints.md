@@ -45,7 +45,5 @@ In this walkthrough you will configure your app service to restrict access to on
 > There is now a new _Access restriction (preview)_ option for you to select in the _Networking_ menu for your app service.
 > Refer back to the last Note of this demo for more details: [Access/IP Restrictions](02_IPrestrictions.md)
 
-![Access Restrictions](../media/Access_Restriction_Preview_2.png)
-
 Previous guide: [Access/IP Restrictions](02_IPrestrictions.md)
 Next guide: [Private Link](04_privatelink.md)
