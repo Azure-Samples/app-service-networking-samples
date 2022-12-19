@@ -2,7 +2,7 @@
 
 If all of the previous setups is not enough to cover your networking requirements, there is also the special case of App Service Environments v3. This is a deployment of a single tenant app service within your network. You can choose for a public IP on your ASE (External Load Balancer) or a private IP (Internal Load Balancer). 
 
-An ASE is very useful in case you :
+An ASE is very useful in case you:
 
 - Have a need for really big scale out. ASE will allow you to scale out much more than regular multi-tenant app service.
 - Have a single-tenant requirement for your workload.

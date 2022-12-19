@@ -48,7 +48,7 @@ In this walkthrough you initially lock down access to the backend database by ad
 - Notice that you are still able to connect to the backend database and that the connection is still made over a public IP address.
 
 > [NOTE]
-> Unlike the behavior you saw when you created a private endpoint for your web app earlier, where you weren't able to access the web app over a public IP anymore, for an Azure SQL Server this private endpoint setup behaves differently. Azure SQL database has additional settings available for locking down access to it. We will further lock down access to the database in the next steps.
+> Unlike the behavior you saw when you created a private endpoint for your web app earlier, where you weren't able to access the web app over a public IP anymore (if you used the original _Access Restriction_ option in the inbound networking features for the app service), for an Azure SQL Server this private endpoint setup behaves differently. Azure SQL database has additional settings available for locking down access to it. We will further lock down access to the database in the next steps.
 
 - In the Azure portal, navigate back to the SQL Server resource.
 - Select _Firewalls and virtual networks_ from the menu.

@@ -3,7 +3,7 @@
 With a private endpoint you can create a private IP address for your app service in your virtual network. Once you do this, the public access to your app service is removed.
 The big difference between private endpoints and service endpoints is that private endpoints also allow you to connect to your app service from on-prem systems over site to site VPN or ExpressRoute connections. Additionaly you can connect to your app service over virtual network peering, and even global virtual network peering. Service endpoints don't give you this capability.
 
-Once you create a private endpoint, additional DNS settings need to be made. Your _myapp.azurewebsites.net_ now needs to point to _myapp.privatelink.azurewebsites.net_, which in its turn points to your private IP address. Either you can use the DNS capabilities on the virtual network which can create the necessary DNS records for you in a private DNS zone (which we'll also use in the demo walkthrough). Or you can decide to run your own DNS, in that case you need to configure the DNS records for the new privatelink DNS name. You will also need to perform additional DNS config in case you want to connect from on-prem systems to your app service or over peered networks. You can find more details in [this docs article on Azure Private Endpoint DNS configuration](https://docs.microsoft.com/azure/private-link/private-endpoint-dns).
+Once you create a private endpoint, additional DNS settings need to be made. Your _{myapp}.azurewebsites.net_ now needs to point to _{myapp}.privatelink.azurewebsites.net_, which in its turn points to your private IP address. Either you can use the DNS capabilities on the virtual network which can create the necessary DNS records for you in a private DNS zone (which we'll also use in the demo walkthrough). Or you can decide to run your own DNS. In that case you need to configure the DNS records for the new _privatelink_ DNS name. You will also need to perform additional DNS config in case you want to connect from on-prem systems to your app service or over peered networks. You can find more details in [this docs article on Azure Private Endpoint DNS configuration](https://docs.microsoft.com/azure/private-link/private-endpoint-dns).
 
 ![Private endpoint](../media/private%20link2.svg)
 
@@ -15,7 +15,23 @@ In this walkthrough you will create a private endpoint for your app service.
 - In the overview screen select the URL of your app service and open the site in a new tab.
 - Select the _Networking_ menu for your app service.
 - Select _Private endpoints_.
-- Select _Add_.
+- Select _Add_ and then select _Express_.
+
+> [NOTE]
+> When you click _Add_ there are actually 2 options now: _Express_ (the "old" and default one) and _Advanced_ (the "new" one).
+
+![Private Endpoint](../media/Private_Endpoints_1.png)
+
+> The _Express_ option gives you the original flyout experience.
+> The _Advanced_ option is the new one, where it takes you to a new private link wizard creation experience (like the one you experience when you choose to create other Azure resources, like VMs, Storage Accounts, AKS clusters, etc.).
+
+![Private Endpoint](../media/Private_Endpoints_2.png)
+
+> The extra capability, compared to the _Express_ option, is given to you inside the 3rd tab of the wizard -_Virtual Network_-, where you can also define a network policy for your private endpoints.
+> By default it is disabled, but clicking on _(edit)_ you can enable network policies (NSGs, UDRs) setting for all private endpoints inside the selected subnet. You can find more details in [this MS Learn article on Managing network policies for private endpoints](https://learn.microsoft.com/en-us/azure/private-link/disable-private-endpoint-network-policy?tabs=network-policy-portal).
+
+![Private Endpoint](../media/Private_Endpoints_3.png)
+
 - In the flyout fill out the following values:
   - **Name**: appSvcPE
   - **Subscription**: leave this value at your current subscription
@@ -23,7 +39,14 @@ In this walkthrough you will create a private endpoint for your app service.
   - **Subnet**: PLSubnet
   - **Integrate with private DNS zone**: Yes
 - Select _OK_.
-- Once the private enpoint has been created, refresh your applications web page, you're web app can not be found anymore.
+- Once the private enpoint has been created, refresh your applications web page. Your web app can not be found anymore.
+
+> [NOTE]
+> Current behavior for multi-tenant app service secured with Private Endpoint was to block external public access. 
+> So, that made App Service different than other services (e.g. Azure SQL DB) in the behavior of removing public access as soon as you enabled private endpoint (without your choice).
+> A recent change made it possible for an App to be accessible through both public and private IP, by enabling private link and setting Microsoft.Web/sites/config/publicNetworkAccess property to enabled. Access restriction can be then set to restrict the public access, if you want to. Now, it is possible to also do it in the portal from the new _Access Restriction (preview)_ screen.
+
+![Access Restriction](../media/Access_Restriction_Preview_3.png)
 
 > [NOTE]
 > If you don't get a 403 Forbidden message, refresh the screen again a couple of times. It might take some time for this change to take effect.
@@ -38,7 +61,7 @@ In this walkthrough you will create a private endpoint for your app service.
 - In the overview screen you will notice an A record pointing to the private IP address of the private endpoint for both the regular site of your web app and for the .scm site.
 
 > [NOTE]
-> Additionaly overall Azure DNS will have added a configuration that points from yourwebapp.azurewebsites.net to yourwebapp.privatelink.azurewebsites.net.
+> Additionaly overall Azure DNS will have added a configuration that points from {yourwebapp}.azurewebsites.net to {yourwebapp}.privatelink.azurewebsites.net.
 
 ### Application Gateway
 - Navigate back to the resource group, select the Public IP Address resource. This IP address is associated with the application gateway in the resource group.
@@ -74,7 +97,11 @@ To enable Azure Front Door to reach the web app through the private link, you ne
 - Select _Private endpoints_.
 - You will see a new private endpoint that needs to be approved with the request message you provided in the previous step (*Private link access from Azure Front Door*)
 
-Once you have approved the Private Link it will take few minutes to the configuration to be propagated, then you will be able to reach the web app thru front door. 
+Once you have approved the Private Link it will take few minutes to the configuration to be propagated, then you will be able to reach the web app through front door.
+
+Also, once the new Private Endpoint has been created, if you go now to the _Networking_ menu of your app service, under the _Inbound address_ of the _Inbound Traffic_ options, you will see two different private IP addresses. The first one ("10.0.2.X") will be the one coming from the private endpoint of the app service that you created earlier ("appSvcPE") and will get a private IP address from inside the PLSubnet of your VNET. The second inbound address that you will see there, if you pay attention to the value of it, you will see that it does not belong to any private IP address space of any of the subnets of your own VNET. This private endpoint is the one that the Front Door will use, as part of the configuration we did in the last step of our demo. Front Door is a multi-tenant global service, so it resides inside a Microsoft-Managed VNET. This IP address is coming from inside a subnet of this Microsoft-Managed VNET and you cannot access it.
+
+![Private Endpoint](../media/Private_Endpoints_4.png)
 
 > [NOTE]
 > Notice that in this walkthrough we do not remove the private endpoint configurations, removing it puts the demo walkthrough in a _in limbo_ state where it takes a while for the public URL of the app to be back available. Since we don't want to let you wait for this, we will leave the private endpoint in place.

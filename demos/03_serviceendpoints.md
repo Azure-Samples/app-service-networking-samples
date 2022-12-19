@@ -41,5 +41,9 @@ In this walkthrough you will configure your app service to restrict access to on
 - In the Azure portal, navigate back to your app service networking screen for the access restrictions.
 - Remove the rule you created.
 
+> [NOTE]
+> There is now a new _Access restriction (preview)_ option for you to select in the _Networking_ menu for your app service.
+> Refer back to the last Note of this demo for more details: [Access/IP Restrictions](02_IPrestrictions.md)
+
 Previous guide: [Access/IP Restrictions](02_IPrestrictions.md)
 Next guide: [Private Link](04_privatelink.md)
