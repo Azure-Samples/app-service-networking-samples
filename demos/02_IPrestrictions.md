@@ -17,6 +17,7 @@ You will first block access to your app service for calls coming from a specific
   - **Name**: BlockMyIP
   - **Action**: Deny
   - **Priority**: 100
+  - **Description**:Block my IP from accessing webapp
   - **Type**: IPv4
   - **IP Address Block**: Look up your current IP address with [whatsmyip](https://www.whatsmyip.org/) and fill out that IP address.
 - Select _Add rule_.
@@ -47,6 +48,7 @@ You will now block access to your app service to allow only calls that are made 
   - **Name**: Allow only FD
   - **Action**: Allow
   - **Priority**: 100
+  - **Description**: Allow only Front Door requests to webapp
   - **Type**: Service Tag
   - **Service Tag**: AzureFrontDoor.Backend
   - **X-Azure-FDID**: Paste the Front Door ID you copied earlier
