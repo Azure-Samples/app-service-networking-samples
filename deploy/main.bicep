@@ -89,7 +89,8 @@ resource sqlserver 'Microsoft.Sql/servers@2021-02-01-preview' = {
 }
 
 resource sqlDatabase 'Microsoft.Sql/servers/databases@2020-08-01-preview' = {
-  name: '${sqlserver.name}/${databaseName}'
+  name: databaseName
+  parent: sqlserver
   location: location
   sku: {
     name: 'Basic'
@@ -103,7 +104,8 @@ resource sqlDatabase 'Microsoft.Sql/servers/databases@2020-08-01-preview' = {
 //Allow all azure services: do NOT do this in production! This opens up your database to ALL azure customers azure services! 
 //In the demo walkthrough you will lock this down.
 resource sqlserverName_AllowAllWindowsAzureIps 'Microsoft.Sql/servers/firewallRules@2014-04-01' = {
-  name: '${sqlserver.name}/AllowAllWindowsAzureIps'
+  name: 'AllowAllWindowsAzureIps'
+  parent: sqlserver
   properties: {
     endIpAddress: '0.0.0.0'
     startIpAddress: '0.0.0.0'
@@ -194,7 +196,7 @@ resource applicationGateway 'Microsoft.Network/applicationGateways@2020-11-01' =
     backendAddressPools: [
       {
         name: 'myBackendPool'
-        properties:{
+        properties: {
           backendAddresses: [
             {
               fqdn: webSite.properties.defaultHostName
@@ -298,11 +300,10 @@ resource origin 'Microsoft.Cdn/profiles/originGroups/origins@2021-06-01' = {
   }
 }
 
-
 resource route 'Microsoft.Cdn/profiles/afdEndpoints/routes@2021-06-01' = {
   name: routingRuleName
   parent: endpoint
-  dependsOn:[
+  dependsOn: [
     origin // This explicit dependency is required to ensure that the origin group is not empty when the route is created.
   ]
   properties: {
