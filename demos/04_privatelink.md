@@ -81,7 +81,7 @@ az network application-gateway start -g <your resource group> -n <your applicati
 ```
 
 ### Azure Front Door
-To enable Azure Front Door to reach the web app through the private link, you need to configure the origin to use private link as per stepts below (for details: [check this link](https://docs.microsoft.com/azure/frontdoor/standard-premium/how-to-enable-private-link-web-app)):
+To enable Azure Front Door to reach the web app through the private link, you need to configure the origin to use private link as per steps below (for details: [check this link](https://docs.microsoft.com/azure/frontdoor/standard-premium/how-to-enable-private-link-web-app)):
 - In the Azure Portal, Navigate to your front door instance
 - In the overview, locate the Origin Groups and click on the ´backendOriginGroup´
 - Click on the three dot located in the right side and click on ´Configure origin group´
