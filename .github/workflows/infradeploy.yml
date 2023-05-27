@@ -3,7 +3,7 @@ name: deploy-app-svc-networking-sample
 on: [workflow_dispatch]
 
 env: 
-    AZURE_RESOURCEGROUP_NAME: appsvcnetworkingdemo # Be sure to use all lowercase values for the name. 
+    AZURE_RESOURCEGROUP_NAME: rg_eastus_85570_1_168518375746 # Be sure to use all lowercase values for the name. 
 
 jobs:
   deploy-infra:
