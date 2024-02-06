@@ -20,7 +20,7 @@ jobs:
     #    with:
     #     inlineScript: |
     #        aadSid=$(az ad user show --id ${{ secrets.AAD_USERNAME }} --query objectId -o tsv)
-    #        echo "::set-output name=aadSid::$aadSid"
+    #        echo "aadSid=$aadSid" >> "$GITHUB_OUTPUT"
      - uses: azure/arm-deploy@v1
        id: deploy
        name: Deploy Bicep
