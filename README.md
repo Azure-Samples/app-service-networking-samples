@@ -23,6 +23,7 @@ The below drawing illustrates this setup:
 - An Azure Account.
 - (Optional) A fork of this GitHub repository in your own account and with the capability of executing GitHub actions (public repository access is needed for this).
 - The latest [Azure CLI](https://docs.microsoft.com/cli/azure/install-azure-cli) version installed. Azure Cloud Shell can also be used as an alternative for the script steps in case Azure CLI is not installed.
+- (Optional) [Azure Developer CLI (`azd`)](https://learn.microsoft.com/azure/developer/azure-developer-cli/install-azd) for one-command provisioning via `azd up`.
 
 ### Installation
 
@@ -187,6 +188,26 @@ az sql server firewall-rule create \
 # MANUAL ACTION:
 # Use sqlcmd or the SQL query editor in the Azure portal to execute the above SQL file on the database.
 ```
+
+#### Option 3: Deploy with Azure Developer CLI (`azd`)
+
+This repository includes an `azd` project configuration and can be provisioned with `azd up`.
+
+```bash
+azd auth login
+azd up
+```
+
+What this does:
+
+1. Uses `deploy/main.bicep` for infrastructure provisioning.
+1. Automatically resolves your signed-in Entra user (`AAD_USERNAME` and `AAD_SID`) before provisioning.
+1. Generates `deploy/dbuser.sql` after provisioning by replacing `accountName` in `deploy/mi.sql` with the deployed web app managed identity principal ID.
+
+Manual follow-up (same as the other options):
+
+1. Open the `sample` SQL database Query Editor in Azure Portal.
+1. Run the generated `deploy/dbuser.sql` script.
 
 ## Demos
 

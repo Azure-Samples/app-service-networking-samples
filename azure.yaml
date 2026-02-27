@@ -1,0 +1,36 @@
+name: app-service-networking-samples
+metadata:
+  template: app-service-networking-samples
+
+infra:
+  provider: bicep
+  path: deploy
+
+hooks:
+  preup:
+    windows:
+      shell: pwsh
+      run: ./scripts/azd/preprovision.ps1
+      continueOnError: false
+    posix:
+      shell: sh
+      run: sh ./scripts/azd/preprovision.sh
+      continueOnError: false
+  preprovision:
+    windows:
+      shell: pwsh
+      run: ./scripts/azd/preprovision.ps1
+      continueOnError: false
+    posix:
+      shell: sh
+      run: sh ./scripts/azd/preprovision.sh
+      continueOnError: false
+  postprovision:
+    windows:
+      shell: pwsh
+      run: ./scripts/azd/postprovision.ps1
+      continueOnError: false
+    posix:
+      shell: sh
+      run: sh ./scripts/azd/postprovision.sh
+      continueOnError: false
