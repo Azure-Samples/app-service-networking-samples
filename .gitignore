@@ -348,3 +348,6 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+
+# do not add generated dbuser.sql file to the repository, as it contains sensitive information
+dbuser.sql
