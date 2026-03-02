@@ -2,24 +2,14 @@ $ErrorActionPreference = 'Stop'
 
 $resourceGroup = $env:AZURE_RESOURCE_GROUP
 
-if ([string]::IsNullOrWhiteSpace($resourceGroup)) {
-  throw 'AZURE_RESOURCE_GROUP is not set. Run azd provision/up first.'
-}
-
-$deploymentName = az deployment group list --resource-group $resourceGroup --query "[?properties.provisioningState=='Succeeded'] | sort_by(@, &properties.timestamp)[-1].name" --output tsv
-
-if ([string]::IsNullOrWhiteSpace($deploymentName)) {
-  throw "No successful deployment found in resource group '$resourceGroup'."
-}
-
-$webSiteHostName = az deployment group show --resource-group $resourceGroup --name $deploymentName --query properties.outputs.webSiteHostName.value --output tsv
+$webSiteHostName = $env:webSiteHostName
 
 if ([string]::IsNullOrWhiteSpace($webSiteHostName)) {
   throw 'Failed to retrieve webSiteHostName from deployment outputs.'
 }
 
 $webAppName = $webSiteHostName.Split('.')[0]
-$principalId = az webapp identity show --resource-group $resourceGroup --name $webAppName --query principalId --output tsv
+$principalId = $env:principalId
 
 if ([string]::IsNullOrWhiteSpace($principalId)) {
   throw "Failed to retrieve managed identity principalId for web app '$webAppName'."

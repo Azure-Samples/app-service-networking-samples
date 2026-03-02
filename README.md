@@ -27,7 +27,28 @@ The below drawing illustrates this setup:
 
 ### Installation
 
-#### Option 1: Using GitHub Actions
+#### Option 1: Deploy with Azure Developer CLI (`azd`)
+
+This repository includes an `azd` project configuration and can be provisioned with `azd up`.
+
+```bash
+azd auth login
+azd up
+```
+
+What this does:
+
+1. Uses `deploy/main.bicep` for infrastructure provisioning.
+1. Automatically resolves your signed-in Entra user (`AAD_USERNAME` and `AAD_SID`) before provisioning.
+1. Generates `deploy/dbuser.sql` after provisioning by replacing `accountName` in `deploy/mi.sql` with the deployed web app managed identity principal ID.
+
+Manual follow-up (same as the other options):
+
+1. In the Azure portal navigate to your SQL Server firewall and add your current IP address. 
+1. Open the `sample` SQL database Query Editor in Azure Portal.
+1. Run the generated `deploy/dbuser.sql` script.
+
+#### Option 2: Using GitHub Actions
 
 The below walkthrough contains the steps for creating a resource group in Azure and the steps needed to set up your deployment secret in your GitHub repository.
 
@@ -120,7 +141,7 @@ To check whether the installation was done correctly:
 
 1. Select *Submit*. This should give you a response on the same page with an access token and an output indicating you successfully logged in to the database by using a managed identity and from a public IP address.
 
-#### Option 2: Deploy directly from your workstation
+#### Option 3: Deploy directly from your workstation
 
 You can use the bash script below to deploy the necessary resources directly from your workstation using the Azure CLI.
 
@@ -188,26 +209,6 @@ az sql server firewall-rule create \
 # MANUAL ACTION:
 # Use sqlcmd or the SQL query editor in the Azure portal to execute the above SQL file on the database.
 ```
-
-#### Option 3: Deploy with Azure Developer CLI (`azd`)
-
-This repository includes an `azd` project configuration and can be provisioned with `azd up`.
-
-```bash
-azd auth login
-azd up
-```
-
-What this does:
-
-1. Uses `deploy/main.bicep` for infrastructure provisioning.
-1. Automatically resolves your signed-in Entra user (`AAD_USERNAME` and `AAD_SID`) before provisioning.
-1. Generates `deploy/dbuser.sql` after provisioning by replacing `accountName` in `deploy/mi.sql` with the deployed web app managed identity principal ID.
-
-Manual follow-up (same as the other options):
-
-1. Open the `sample` SQL database Query Editor in Azure Portal.
-1. Run the generated `deploy/dbuser.sql` script.
 
 ## Demos
 
