@@ -9,8 +9,8 @@ jobs:
   deploy-infra:
     runs-on: ubuntu-latest
     steps:
-     - uses: actions/checkout@v2
-     - uses: azure/login@v1
+     - uses: actions/checkout@0717577d45739eb3c851188b29f50ed6c0b2194e # v2.8.0
+     - uses: azure/login@cb79c773a3cfa27f31f25eb3f677781210c9ce3d # v1.6.1
        name: Sign in to Azure
        with:
          creds: ${{ secrets.AZURE_CREDENTIALS }}    
@@ -21,7 +21,7 @@ jobs:
     #     inlineScript: |
     #        aadSid=$(az ad user show --id ${{ secrets.AAD_USERNAME }} --query objectId -o tsv)
     #        echo "::set-output name=aadSid::$aadSid"
-     - uses: azure/arm-deploy@v1
+     - uses: azure/arm-deploy@65ae74fb7aec7c680c88ef456811f353adae4d06 # v1.0.9
        id: deploy
        name: Deploy Bicep
        with:
